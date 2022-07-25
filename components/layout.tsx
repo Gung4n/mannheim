@@ -1,22 +1,15 @@
+import clsx from "clsx";
 import React, { RefObject, useCallback, useRef, useState } from "react";
 import { start } from "repl";
 import styles from "../styles/Layout.module.sass";
+import { WordScramble } from "./wordScramble";
 
 export function Layout() {
   const [offsetPosition, setOffsetPosition] = useState({ x: 0, y: 0 });
   const [isMoving, setIsMoving] = useState(false);
   const helloRef: RefObject<HTMLDivElement> = useRef(null);
 
-  // const onPointerUp = useCallback(
-  //   (event: React.PointerEvent<HTMLDivElement>) => {
-  //     startPosition.current = {
-  //       x: event.clientX,
-  //       y: event.clientY,
-  //     };
-  //     setIsMoving(false);
-  //   },
-  //   [startPosition]
-  // );
+  const [displayString, setDisplayString] = useState("hello");
 
   const [startingPosition, setStartingPosition] = useState({ x: 0, y: 0 });
   const calculateStartingPosition = useCallback(() => {
@@ -36,6 +29,9 @@ export function Layout() {
           x: event.clientX - startingPosition.x,
           y: event.clientY - startingPosition.y,
         };
+        setDisplayString(
+          WordScramble(displayString, newPosition.x, newPosition.y)
+        );
         setOffsetPosition(newPosition);
       }
     },
@@ -58,7 +54,13 @@ export function Layout() {
           } as React.CSSProperties
         }
       >
-        hello
+        {displayString}
+      </div>
+      <div className={styles.gridWrapper}>
+        <div className={clsx(styles.cell, styles.topLeft)}>a</div>
+        <div className={clsx(styles.cell, styles.topRight)}>b</div>
+        <div className={clsx(styles.cell, styles.bottomLeft)}>c</div>
+        <div className={clsx(styles.cell, styles.bottomRight)}>d</div>
       </div>
     </div>
   );
