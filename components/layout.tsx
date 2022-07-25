@@ -10,7 +10,7 @@ export function Layout() {
   const helloRef: RefObject<HTMLDivElement> = useRef(null);
 
   const [displayString, setDisplayString] = useState("hello");
-
+  let displayStringFilter = 0;
   const [startingPosition, setStartingPosition] = useState({ x: 0, y: 0 });
   const calculateStartingPosition = useCallback(() => {
     setStartingPosition({
@@ -29,9 +29,13 @@ export function Layout() {
           x: event.clientX - startingPosition.x,
           y: event.clientY - startingPosition.y,
         };
-        setDisplayString(
-          WordScramble(displayString, newPosition.x, newPosition.y)
-        );
+        displayStringFilter++;
+        displayStringFilter = displayStringFilter % 3;
+        if (displayStringFilter === 0) {
+          setDisplayString(
+            WordScramble(displayString, newPosition.x, newPosition.y)
+          );
+        }
         setOffsetPosition(newPosition);
       }
     },
