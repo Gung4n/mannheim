@@ -1,34 +1,55 @@
-import React, { useCallback, useRef, useState } from "react";
+import React, { RefObject, useCallback, useRef, useState } from "react";
+import { start } from "repl";
 import styles from "../styles/Layout.module.sass";
 
 export function Layout() {
-  const startPosition = useRef({ x: 0, y: 0 });
   const [offsetPosition, setOffsetPosition] = useState({ x: 0, y: 0 });
-  const onPointerDown = useCallback(
-    (event: React.PointerEvent<HTMLDivElement>) => {
-      startPosition.current = {
-        x: event.clientX,
-        y: event.clientY,
-      };
-    },
-    [startPosition]
-  );
+  const [isMoving, setIsMoving] = useState(false);
+  const helloRef: RefObject<HTMLDivElement> = useRef(null);
+
+  // const onPointerUp = useCallback(
+  //   (event: React.PointerEvent<HTMLDivElement>) => {
+  //     startPosition.current = {
+  //       x: event.clientX,
+  //       y: event.clientY,
+  //     };
+  //     setIsMoving(false);
+  //   },
+  //   [startPosition]
+  // );
+
+  const [startingPosition, setStartingPosition] = useState({ x: 0, y: 0 });
+  const calculateStartingPosition = useCallback(() => {
+    setStartingPosition({
+      x:
+        (helloRef.current?.offsetLeft ?? 0) +
+        (helloRef.current?.clientWidth ?? 0) / 2,
+      y:
+        (helloRef.current?.offsetTop ?? 0) +
+        (helloRef.current?.clientHeight ?? 0) / 2,
+    });
+  }, [helloRef]);
   const onPointerMove = useCallback(
     (event: React.PointerEvent<HTMLDivElement>) => {
-      const newPosition = { x: event.clientX, y: event.clientY };
-      setOffsetPosition(newPosition);
+      if (isMoving) {
+        const newPosition = {
+          x: event.clientX - startingPosition.x,
+          y: event.clientY - startingPosition.y,
+        };
+        setOffsetPosition(newPosition);
+      }
     },
-    []
+    [isMoving, setOffsetPosition, startingPosition]
   );
 
   return (
-    <div className={styles.wrapper}>
-      <div>
-        {offsetPosition.x} {offsetPosition.y}
-      </div>
+    <div onPointerMove={onPointerMove} className={styles.wrapper}>
       <div
-        onPointerDown={onPointerDown}
-        onPointerMove={onPointerMove}
+        ref={helloRef}
+        onClick={() => {
+          calculateStartingPosition();
+          setIsMoving(!isMoving);
+        }}
         className={styles.hello}
         style={
           {
