@@ -1,1 +1,8 @@
-{}
+{
+  "../node_modules/.pnpm/use-sound@4.0.1_react@18.2.0/node_modules/use-sound/dist/use-sound.esm.js -> howler": {
+    "id": "../node_modules/.pnpm/use-sound@4.0.1_react@18.2.0/node_modules/use-sound/dist/use-sound.esm.js -> howler",
+    "files": [
+      "static/chunks/node_modules_pnpm_howler_2_2_3_node_modules_howler_dist_howler_js.js"
+    ]
+  }
+}

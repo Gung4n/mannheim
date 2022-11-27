@@ -59,6 +59,9 @@ export function WordScramble(word: string, seed1: number, seed2: number) {
   ];
   const scramblable = word.split("");
   const retval: string[] = [];
+
+  //@TODO: create a better function
+
   scramblable.forEach((element) => {
     const charlistIndex = charlist.findIndex((item) => item === element) ?? 1;
     retval.push(
