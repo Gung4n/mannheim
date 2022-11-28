@@ -1,7 +1,7 @@
 import styles from "../styles/TestLayout.module.sass";
 import useSound from "use-sound";
 import Image from "next/image";
-import prayer1 from "../public/prayer1.mp3";
+// import prayer1 from "../public/prayer1.mp3";
 import bottomLeft from "../public/bottomLeft.png";
 import bottomRight from "../public/bottomRight.png";
 import bottomMiddle from "../public/bottomMiddle.png";
@@ -13,8 +13,8 @@ import topMiddle from "../public/topMiddle.png";
 import { useState } from "react";
 
 export function TestLayout() {
-  const [playPrayer1, exposedPrayer1] = useSound(prayer1, { interrupt: false });
-  const [playing, setPlaying] = useState(false);
+  // const [playPrayer1, exposedPrayer1] = useSound(prayer1, { interrupt: false });
+  // const [playing, setPlaying] = useState(false);
   return (
     <div className={styles.wrapper}>
       {/* top */}
